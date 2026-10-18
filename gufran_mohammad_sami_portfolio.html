@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gufran Mohammad Sami | Portfolio</title>
+    <!-- Google Fonts: JetBrains Mono for Hacker/Terminal vibe & Space Grotesk for Modern Headers -->
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@400;600;700&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        :root {
+            --bg-dark: #07090e;
+            --bg-card: rgba(16, 22, 34, 0.75);
+            --cyan-primary: #00f3ff;
+            --cyan-secondary: #45a29e;
+            --cyan-glow: rgba(0, 243, 255, 0.35);
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-cyan: rgba(0, 243, 255, 0.25);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', 'Hind Siliguri', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Background Cyber Grid & Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            opacity: 0.45;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(to right, rgba(0, 243, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #07090e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--cyan-secondary);
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyan-primary);
+            box-shadow: 0 0 10px var(--cyan-primary);
+        }
+
+        /* Navigation Bar */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(7, 9, 14, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-cyan);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--cyan-primary);
+            text-decoration: none;
+            text-shadow: 0 0 10px var(--cyan-glow);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--text-main);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::before {
+            content: '>';
+            color: var(--cyan-primary);
+            margin-right: 4px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan-primary);
+            text-shadow: 0 0 8px var(--cyan-glow);
+        }
+
+        .nav-links a:hover::before {
+            opacity: 1;
+        }
+
+        /* Container & Sections */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            gap: 3rem;
+            padding-top: 5rem;
+        }
+
+        .terminal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--cyan-primary);
+            background: rgba(0, 243, 255, 0.08);
+            border: 1px solid var(--border-cyan);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 1.2rem;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.1);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--cyan-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--cyan-primary);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.2); }
+        }
+
+        /* Glitch Effect for Name */
+        .glitch-wrapper {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .glitch {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.15;
+            color: #fff;
+            position: relative;
+            letter-spacing: -0.5px;
+        }
+
+        .glitch span {
+            color: var(--cyan-primary);
+            text-shadow: 0 0 20px var(--cyan-glow);
+        }
+
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch::before {
+            color: #0ff;
+            z-index: -1;
+            animation: glitch-anim-1 3.5s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            color: #ff0055;
+            z-index: -2;
+            animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch-anim-1 {
+            0%, 92% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            94% { clip-path: inset(20% 0 60% 0); transform: translate(-3px, 1px); }
+            96% { clip-path: inset(70% 0 10% 0); transform: translate(3px, -1px); }
+            98% { clip-path: inset(40% 0 40% 0); transform: translate(-2px, 2px); }
+            100% { clip-path: inset(10% 0 80% 0); transform: translate(2px, -2px); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0%, 90% { clip-path: inset(0 0 0 0); transform: translate(0); }
+            93% { clip-path: inset(60% 0 20% 0); transform: translate(3px, -1px); }
+            96% { clip-path: inset(15% 0 70% 0); transform: translate(-3px, 2px); }
+            100% { clip-path: inset(50% 0 30% 0); transform: translate(2px, 1px); }
+        }
+
+        /* Terminal Typing Line */
+        .typing-container {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.15rem;
+            color: var(--cyan-secondary);
+            margin-bottom: 1.5rem;
+            min-height: 2rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2rem;
+            background-color: var(--cyan-primary);
+            margin-left: 5px;
+            animation: blink 0.8s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .hero-bio {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            background: rgba(16, 22, 34, 0.5);
+            border-left: 3px solid var(--cyan-primary);
+            padding: 1rem 1.25rem;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            font-family: 'JetBrains Mono', monospace;
+            padding: 0.85rem 1.8rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: rgba(0, 243, 255, 0.12);
+            color: var(--cyan-primary);
+            border: 1px solid var(--cyan-primary);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--cyan-primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 25px var(--cyan-primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-main);
+            border: 1px solid rgba(226, 232, 240, 0.25);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--cyan-primary);
+            color: var(--cyan-primary);
+            transform: translateY(-2px);
+        }
+
+        /* Vector Illustration Container */
+        .hero-vector {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .cyber-vector-svg {
+            width: 100%;
+            max-width: 420px;
+            filter: drop-shadow(0 0 20px rgba(0, 243, 255, 0.2));
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .orbit-ring {
+            transform-origin: center;
+            animation: rotateRing 20s linear infinite;
+        }
+
+        .orbit-ring-reverse {
+            transform-origin: center;
+            animation: rotateRing 15s linear infinite reverse;
+        }
+
+        @keyframes rotateRing {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Section Headings */
+        .section-header {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-tag {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--cyan-primary);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            max-width: 300px;
+            background: linear-gradient(90deg, var(--cyan-primary), transparent);
+        }
+
+        /* Initiatives / Projects Grid (3D Tilt Cards) */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .tilt-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            padding: 2.2rem;
+            position: relative;
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .tilt-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan-primary), transparent);
+            transition: 0.6s;
+        }
+
+        .tilt-card:hover::before {
+            left: 100%;
+        }
+
+        .tilt-card:hover {
+            border-color: var(--cyan-primary);
+            box-shadow: 0 10px 30px -10px var(--cyan-glow);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-icon {
+            font-size: 2.2rem;
+            color: var(--cyan-primary);
+            background: rgba(0, 243, 255, 0.1);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid var(--border-cyan);
+        }
+
+        .role-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: rgba(0, 243, 255, 0.12);
+            color: var(--cyan-primary);
+            border: 1px solid var(--border-cyan);
+        }
+
+        .tilt-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            color: #fff;
+        }
+
+        .tilt-card p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: auto;
+        }
+
+        .card-tags span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.04);
+            padding: 0.25rem 0.65rem;
+            border-radius: 4px;
+        }
+
+        /* Exploring / Skills & Interests */
+        .skills-interests-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+        }
+
+        .cyber-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-cyan);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .cyber-box h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.25rem;
+            color: var(--cyan-primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .stagger-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 243, 255, 0.15);
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item:hover {
+            border-color: var(--cyan-primary);
+            background: rgba(0, 243, 255, 0.08);
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.15);
+        }
+
+        .skill-item i {
+            font-size: 1.4rem;
+            color: var(--cyan-primary);
+        }
+
+        .skill-info h4 {
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .skill-info span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            color: var(--cyan-secondary);
+        }
+
+        /* Education Timeline / Terminal Box */
+        .edu-terminal {
+            background: #0a0d14;
+            border: 1px solid var(--border-cyan);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-bar {
+            background: #141a26;
+            padding: 0.7rem 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border-cyan);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .dot.red { background: #ff5f56; }
+        .dot.yellow { background: #ffbd2e; }
+        .dot.green { background: #27c93f; }
+
+        .terminal-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 0.5rem;
+        }
+
+        .terminal-body {
+            padding: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .cmd-line {
+            color: var(--cyan-primary);
+            margin-bottom: 0.8rem;
+        }
+
+        .cmd-output {
+            color: var(--text-main);
+            padding-left: 1.2rem;
+            border-left: 2px solid var(--cyan-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cmd-output h4 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 0.3rem;
+        }
+
+        .cmd-output p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .tutoring-banner {
+            margin-top: 2rem;
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.12), rgba(16, 22, 34, 0.85));
+            border: 1px solid var(--cyan-primary);
+            border-radius: 12px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
+        }
+
+        .edu-meta {
+            display: inline-block;
+            font-size: 0.8rem;
+            background: rgba(0, 243, 255, 0.1);
+            color: var(--cyan-primary);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            margin-top: 0.4rem;
+            border: 1px solid var(--border-cyan);
+        }
+
+        /* Contact Section */
+        .contact-box {
+            text-align: center;
+            max-width: 650px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-cyan);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            position: relative;
+        }
+
+        .contact-box p {
+            color: var(--text-muted);
+            margin: 1rem 0 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(0, 243, 255, 0.08);
+            border: 1px solid var(--border-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--cyan-primary);
+            font-size: 1.2rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: var(--cyan-primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--cyan-primary);
+            transform: translateY(-4px);
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(35px);
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid rgba(0, 243, 255, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 7rem;
+            }
+            .hero-bio {
+                margin: 0 auto 2rem;
+                text-align: left;
+            }
+            .typing-container {
+                justify-content: center;
+            }
+            .cta-buttons {
+                justify-content: center;
+            }
+            .skills-interests-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .glitch {
+                font-size: 2.3rem;
+            }
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Interactive Hacker Particle Canvas -->
+    <canvas id="bg-canvas"></canvas>
+    <div class="cyber-grid"></div>
+
+    <!-- Fixed Navigation -->
+    <header>
+        <div class="nav-container">
+            <a href="index.html" class="logo">&lt;Gufran<span>Sami</span>/&gt;</a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#initiatives">Initiatives</a></li>
+                <li><a href="#exploring">Exploring</a></li>
+                <li><a href="#education">Education</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="tutor.html" style="color: var(--cyan-primary); border: 1px solid var(--border-cyan); padding: 0.35rem 0.85rem; border-radius: 50px; background: rgba(0, 243, 255, 0.08);"><i class="fa-solid fa-graduation-cap"></i> Tutor Profile</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- 1. HERO SECTION -->
+        <section class="hero" id="about">
+            <div class="hero-content reveal active">
+                <div class="terminal-badge">
+                    <span class="status-dot"></span>
+                    <span>SYSTEM.INIT // PORTFOLIO_V1.0</span>
+                </div>
+
+                <div class="glitch-wrapper">
+                    <h1 class="glitch" data-text="Gufran Mohammad Sami">Gufran Mohammad <span>Sami</span></h1>
+                </div>
+
+                <div class="typing-container">
+                    <span>&gt;&nbsp;</span>
+                    <span id="typed-text"></span>
+                    <span class="cursor"></span>
+                </div>
+
+                <p class="hero-bio">
+                    আমি চট্টগ্রাম কলেজে পদার্থবিজ্ঞানে অধ্যয়নরত একজন শিক্ষার্থী। থিওরিটিক্যাল ফিজিক্সের পাশাপাশি টেকনোলজির বিভিন্ন শাখায় আমার প্রবল আগ্রহ। বর্তমানে আমি স্টুডেন্ট নেটওয়ার্কিং এবং প্রপটেক নিয়ে কাজ করছি। নতুন স্কিল শেখা এবং আইডিয়াগুলোকে বাস্তবে রূপ দেওয়াই আমার মূল লক্ষ্য।
+                </p>
+
+                <div class="cta-buttons">
+                    <a href="#initiatives" class="btn btn-primary">
+                        <i class="fa-solid fa-rocket"></i> Explore Initiatives
+                    </a>
+                    <a href="tutor.html" class="btn btn-secondary">
+                        <i class="fa-solid fa-chalkboard-user"></i> Physics Tutor Profile
+                    </a>
+                </div>
+            </div>
+
+            <!-- Custom Modern Cyber/Physics Vector Illustration (SVG) -->
+            <div class="hero-vector reveal active">
+                <svg class="cyber-vector-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Outer Cyber Hexagon -->
+                    <polygon points="250,30 440,140 440,360 250,470 60,360 60,140" stroke="#00f3ff" stroke-width="1.5" stroke-dasharray="8 8" fill="rgba(0, 243, 255, 0.02)" />
+                    
+                    <!-- Physics / Tech Rotating Orbits -->
+                    <g class="orbit-ring">
+                        <ellipse cx="250" cy="250" rx="180" ry="70" transform="rotate(30 250 250)" stroke="#00f3ff" stroke-width="1.5" stroke-opacity="0.5"/>
+                        <circle cx="405" cy="340" r="6" fill="#00f3ff" />
+                    </g>
+                    <g class="orbit-ring-reverse">
+                        <ellipse cx="250" cy="250" rx="180" ry="70" transform="rotate(-30 250 250)" stroke="#45a29e" stroke-width="1.5" stroke-opacity="0.6"/>
+                        <circle cx="95" cy="340" r="6" fill="#00f3ff" />
+                    </g>
+                    <g class="orbit-ring">
+                        <circle cx="250" cy="250" r="130" stroke="#00f3ff" stroke-width="1" stroke-dasharray="4 12" />
+                    </g>
+
+                    <!-- Central Floating Terminal / Core -->
+                    <rect x="160" y="175" width="180" height="130" rx="10" fill="#0a0f18" stroke="#00f3ff" stroke-width="2" />
+                    <line x1="160" y1="205" x2="340" y2="205" stroke="#00f3ff" stroke-width="1.5" />
+                    <circle cx="180" cy="190" r="4" fill="#ff5f56" />
+                    <circle cx="195" cy="190" r="4" fill="#ffbd2e" />
+                    <circle cx="210" cy="190" r="4" fill="#27c93f" />
+                    
+                    <!-- Code Lines Inside Vector -->
+                    <rect x="180" y="225" width="70" height="6" rx="3" fill="#00f3ff" />
+                    <rect x="180" y="242" width="120" height="6" rx="3" fill="#45a29e" opacity="0.7" />
+                    <rect x="180" y="259" width="95" height="6" rx="3" fill="#45a29e" opacity="0.5" />
+                    <rect x="180" y="276" width="50" height="6" rx="3" fill="#00f3ff" opacity="0.9" />
+
+                    <!-- Glowing Core Nodes -->
+                    <circle cx="250" cy="70" r="5" fill="#00f3ff" />
+                    <circle cx="250" cy="430" r="5" fill="#00f3ff" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- 2. INITIATIVES & PROJECTS SECTION -->
+        <section id="initiatives">
+            <div class="section-header reveal">
+                <span class="section-tag">// 01. WHAT I'M BUILDING</span>
+                <h2 class="section-title">Initiatives &amp; Projects</h2>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Card 1: The Startup Lab -->
+                <div class="tilt-card reveal" data-tilt>
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <span class="role-badge">Founder</span>
+                    </div>
+                    <h3>The Startup Lab</h3>
+                    <p>
+                        শূন্য থেকে একটি স্টার্টআপ দাঁড় করানো এবং আমাদের ইনোভেটিভ আইডিয়াগুলোকে বাস্তবে (Reality) রূপ দেওয়ার ভিশন নিয়ে কাজ করছি। এটি একটি ক্রমবর্ধমান স্টুডেন্ট কমিউনিটি, যেখানে কেস স্টাডি অ্যানালাইসিস, ব্রেইনস্টর্মিং এবং লিডারশিপ ডেভেলপমেন্টের মাধ্যমে ভবিষ্যৎ উদ্যোক্তা তৈরি করা হচ্ছে।
+                    </p>
+                    <div class="card-tags">
+                        <span>#StartupEcosystem</span>
+                        <span>#IdeaToReality</span>
+                        <span>#CommunityBuilding</span>
+                        <span>#Leadership</span>
+                    </div>
+                </div>
+
+                <!-- Card 2: Vumipath -->
+                <div class="tilt-card reveal" data-tilt>
+                    <div class="card-header">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-map-location-dot"></i>
+                        </div>
+                        <span class="role-badge">Creator</span>
+                    </div>
+                    <h3>ভূমিপাঠ (Vumipath)</h3>
+                    <p>
+                        ল্যান্ড ডকুমেন্টেশন (ভূমি সংক্রান্ত তথ্য) এবং প্রপটেক (PropTech) বিষয়ক একটি শিক্ষামূলক উদ্যোগ। সাধারণ মানুষের কাছে জটিল ভূমি বিষয়ক তথ্যগুলো সহজবোধ্য করার লক্ষ্যে এর ব্র্যান্ডিং, কনটেন্ট প্ল্যানিং এবং ভিজ্যুয়াল কনটেন্ট ডিজাইন নিয়ে কাজ করছি।
+                    </p>
+                    <div class="card-tags">
+                        <span>#PropTech</span>
+                        <span>#LandDocumentation</span>
+                        <span>#VisualContent</span>
+                        <span>#Branding</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CURRENTLY EXPLORING & INTERESTS SECTION -->
+        <section id="exploring">
+            <div class="section-header reveal">
+                <span class="section-tag">// 02. SKILLS &amp; CURIOSITY</span>
+                <h2 class="section-title">Currently Exploring &amp; Interests</h2>
+            </div>
+
+            <div class="skills-interests-wrapper">
+                <!-- Left Box: Learning & Tools -->
+                <div class="cyber-box reveal">
+                    <h3><i class="fa-solid fa-code"></i> Learning &amp; Tools</h3>
+                    <div class="stagger-list">
+                        <div class="skill-item">
+                            <i class="fa-brands fa-python"></i>
+                            <div class="skill-info">
+                                <h4>Python</h4>
+                                <span>Learning Phase</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <div class="skill-info">
+                                <h4>Canva &amp; AI</h4>
+                                <span>Design &amp; Prompting</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-brands fa-github"></i>
+                            <div class="skill-info">
+                                <h4>GitHub</h4>
+                                <span>Version Control</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-laptop-code"></i>
+                            <div class="skill-info">
+                                <h4>Web, App &amp; AI</h4>
+                                <span>Automation &amp; Tech</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Box: Core Interests -->
+                <div class="cyber-box reveal">
+                    <h3><i class="fa-solid fa-microchip"></i> Core Interests</h3>
+                    <div class="stagger-list">
+                        <div class="skill-item">
+                            <i class="fa-solid fa-atom"></i>
+                            <div class="skill-info">
+                                <h4>Theoretical Physics</h4>
+                                <span>Quantum &amp; Cosmos</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-code-branch"></i>
+                            <div class="skill-info">
+                                <h4>IT &amp; Programming</h4>
+                                <span>Problem Solving</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-robot"></i>
+                            <div class="skill-info">
+                                <h4>AI &amp; Automation</h4>
+                                <span>Future Tech</span>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <i class="fa-solid fa-film"></i>
+                            <div class="skill-info">
+                                <h4>Japanese Anime</h4>
+                                <span>Analytical Storytelling</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. EDUCATION SECTION (TERMINAL STYLE) -->
+        <section id="education">
+            <div class="section-header reveal">
+                <span class="section-tag">// 03. ACADEMIC BACKGROUND</span>
+                <h2 class="section-title">Education</h2>
+            </div>
+
+            <div class="edu-terminal reveal">
+                <div class="terminal-bar">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="terminal-title">gufran@portfolio: ~/education_history</span>
+                </div>
+                <div class="terminal-body">
+                    <div class="cmd-line">$ cat academic_profile.log</div>
+                    
+                    <div class="cmd-output">
+                        <h4>B.Sc. (Honours) in Physics</h4>
+                        <p>Chattogram College, Chattogram (Under National University)</p>
+                        <span class="edu-meta">Session: 2024-2025 | Status: Running</span>
+                    </div>
+
+                    <div class="cmd-line">$ echo $CORE_PHILOSOPHY</div>
+                    <div class="cmd-output" style="margin-bottom: 0;">
+                        <p>"Combining analytical thinking from Theoretical Physics with modern technology and entrepreneurship to turn ideas into reality."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtle Link Banner to Dedicated Tutor Page -->
+            <div class="tutoring-banner reveal">
+                <div>
+                    <h4 style="color: var(--cyan-primary); font-family: 'JetBrains Mono', monospace; font-size: 1.1rem; margin-bottom: 0.3rem;">
+                        <i class="fa-solid fa-atom"></i> Looking for Academic Mentorship / Physics Tutoring?
+                    </h4>
+                    <p style="color: var(--text-muted); font-size: 0.92rem;">
+                        আমার একাডেমিক টিউশনি, কোচিং অভিজ্ঞতা এবং ২টি ফ্রি ডেমো ক্লাসের বিস্তারিত জানতে ডেডিকেটেড টিউটর প্রোফাইল পেজটি ভিজিট করুন।
+                    </p>
+                </div>
+                <a href="tutor.html" class="btn btn-primary">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Visit Tutor Page
+                </a>
+            </div>
+        </section>
+
+        <!-- 5. CONTACT SECTION -->
+        <section id="contact">
+            <div class="contact-box reveal">
+                <span class="section-tag">// 04. INITIALIZE CONNECTION</span>
+                <h2 style="font-size: 2rem; color: #fff;">Let's Connect &amp; Collaborate</h2>
+                <p>
+                    স্টার্টআপ আইডিয়া, টেকনোলজি, ফিজিক্স কিংবা টিউশনি/একাডেমিক মেন্টরশিপ বিষয়ে কথা বলতে চাইলে সরাসরি যোগাযোগ করতে পারেন।
+                </p>
+                <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: var(--cyan-primary); margin-top: -1rem; margin-bottom: 2rem;">
+                    <i class="fa-solid fa-location-dot"></i> Shershah Colony, Bayezid, Chattogram
+                </p>
+                <div class="cta-buttons" style="justify-content: center;">
+                    <a href="mailto:gufranmohammadsami@gmail.com" class="btn btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i> Send an Email
+                    </a>
+                    <a href="https://wa.me/8801756438933" target="_blank" class="btn btn-secondary">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp Me
+                    </a>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/gufranmohammadsami" target="_blank" class="social-icon" title="LinkedIn">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/gufranmohammadsami3" target="_blank" class="social-icon" title="GitHub">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://wa.me/8801756438933" target="_blank" class="social-icon" title="WhatsApp">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </a>
+                    <a href="mailto:gufranmohammadsami@gmail.com" class="social-icon" title="Email">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 | Designed &amp; Developed by <span style="color: var(--cyan-primary);">Gufran Mohammad Sami</span></p>
+    </footer>
+
+    <!-- Interactive JavaScript (Typing, 3D Tilt, Scroll Reveal & Cyber Particle Network) -->
+    <script>
+        // 1. Terminal Typing Effect
+        const roles = [
+            "Physics Undergrad @ Chattogram College",
+            "Founder of The Startup Lab",
+            "Creator of Vumipath (ভূমিপাঠ)",
+            "IT, Programming & AI Enthusiast"
+        ];
+        let roleIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextElement = document.getElementById("typed-text");
+
+        function typeEffect() {
+            const currentRole = roles[roleIndex];
+            if (isDeleting) {
+                typedTextElement.textContent = currentRole.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextElement.textContent = currentRole.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 40 : 80;
+
+            if (!isDeleting && charIndex === currentRole.length) {
+                typeSpeed = 2000; // Pause at full sentence
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                roleIndex = (roleIndex + 1) % roles.length;
+                typeSpeed = 400;
+            }
+
+            setTimeout(typeEffect, typeSpeed);
+        }
+        document.addEventListener("DOMContentLoaded", typeEffect);
+
+        // 2. Scroll Reveal Animation (Intersection Observer)
+        const revealElements = document.querySelectorAll(".reveal");
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach((el) => revealObserver.observe(el));
+
+        // 3. Interactive 3D Card Tilt Effect
+        const tiltCards = document.querySelectorAll("[data-tilt]");
+        tiltCards.forEach((card) => {
+            card.addEventListener("mousemove", (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -8;
+                const rotateY = ((x - centerX) / centerX) * 8;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            card.addEventListener("mouseleave", () => {
+                card.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+            });
+        });
+
+        // 4. Background Cyber Particle Network Canvas
+        const canvas = document.getElementById("bg-canvas");
+        const ctx = canvas.getContext("2d");
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.6;
+                this.vy = (Math.random() - 0.5) * 0.6;
+                this.radius = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = "#00f3ff";
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 55; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 130) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist / 130})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+    </script>
+</body>
+</html>
